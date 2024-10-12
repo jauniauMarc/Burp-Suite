@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Lycée Jean Rostand</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="Accueil.html">Accueil</a></li>
+                <li><a href="About.html">À propos</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="signup.html">S'inscrire</a></li>
+                <li><a href="login.html">Se connecter</a></li>
+                <li><a href="#" id="logout">Déconnexion</a></li>
+            </ul>
+        </nav>
+        <h1>Bienvenue sur votre profil</h1>
+    </header>
+
+    <section>
+        <h2>Informations du profil</h2>
+        <p>Email : <span id="userEmail"></span></p>
+
+        <h3>Fonctionnalités</h3>
+        <ul>
+            <li><a href="#" id="editProfile">Modifier mon profil</a></li>
+            <li><a href="#" id="changePassword">Changer le mot de passe</a></li>
+            <li><a href="#" id="viewOrders">Voir mes commandes</a></li>
+            <li><a href="#" id="deleteAccount">Supprimer mon compte</a></li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Lycée Jean Rostand. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        // Récupérer l'email de l'utilisateur depuis localStorage
+        const userEmail = localStorage.getItem('loggedInUser');
+        document.getElementById('userEmail').textContent = userEmail ? userEmail : "Non connecté";
+
+        // Fonctionnalité de déconnexion
+        document.getElementById('logout').addEventListener('click', () => {
+            localStorage.removeItem('loggedInUser'); // Supprimer l'utilisateur du localStorage
+            window.location.href = 'login.html'; // Redirection vers la page de connexion
+        });
+
+        // Ajouter des événements pour les fonctionnalités supplémentaires
+        document.getElementById('editProfile').addEventListener('click', () => {
+            // Logique pour modifier le profil
+            alert("Fonctionnalité à venir : Modifier mon profil");
+        });
+
+        document.getElementById('changePassword').addEventListener('click', () => {
+            // Logique pour changer le mot de passe
+            alert("Fonctionnalité à venir : Changer le mot de passe");
+        });
+
+        document.getElementById('viewOrders').addEventListener('click', () => {
+            // Logique pour voir les commandes
+            alert("Fonctionnalité à venir : Voir mes commandes");
+        });
+
+        document.getElementById('deleteAccount').addEventListener('click', () => {
+            // Logique pour supprimer le compte
+            alert("Fonctionnalité à venir : Supprimer mon compte");
+        });
+    </script>
+</body>
+</html>
