@@ -12,6 +12,11 @@ header {
     text-align: center;
 }
 
+img {
+    width: 500px;
+    border-radius: 15%;
+}
+
 nav ul {
     list-style: none;
     display: flex;

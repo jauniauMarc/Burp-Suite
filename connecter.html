@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - Lycée Jean Rostand</title>
+    <title>Connecté - Lycée Jean Rostand</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="java.css">
 </head>
 <body>
     <header>
@@ -18,18 +17,24 @@
                 <li><a href="login.html">Se connecter</a></li>
             </ul>
         </nav>
-        <h1>Bienvenue au Lycée Jean Rostand - Villepinte</h1>
-        <img id="img" src="JR.jpg">
+        <h1>Bienvenue sur votre compte</h1>
     </header>
 
     <section>
-        <h2>Découvrez notre lycée</h2>
-        <p>Nous vous invitons à explorer notre blog pour en savoir plus sur notre établissement.</p>
-        <img src="lycee-rostand.jpg" alt="Lycée Jean Rostand" class="animated-img"/>
+        <h2>Vous êtes connecté en tant que :</h2>
+        <p id="userEmail"></p>
+        <a href="login.html" onclick="logout()">Se déconnecter</a>
     </section>
 
-    <footer>
-        <p>&copy; 2024 Lycée Jean Rostand Villepinte</p>
-    </footer>
+    <script>
+        // Récupérer l'email de l'utilisateur connecté
+        const userEmail = localStorage.getItem('loggedInUser');
+        document.getElementById('userEmail').textContent = userEmail;
+
+        // Fonction pour se déconnecter
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+        }
+    </script>
 </body>
 </html>
