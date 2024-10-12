@@ -24,6 +24,7 @@
     <section>
         <h2>Informations du profil</h2>
         <p>Email : <span id="userEmail"></span></p>
+        <p>ID Utilisateur : <span id="userId"></span></p> <!-- Affichage de l'ID de l'utilisateur -->
 
         <h3>Fonctionnalités</h3>
         <ul>
@@ -39,13 +40,16 @@
     </footer>
 
     <script>
-        // Récupérer l'email de l'utilisateur depuis localStorage
+        // Récupérer l'email et l'ID de l'utilisateur depuis localStorage
         const userEmail = localStorage.getItem('loggedInUser');
+        const userId = localStorage.getItem('userId'); // Récupérer l'ID
         document.getElementById('userEmail').textContent = userEmail ? userEmail : "Non connecté";
+        document.getElementById('userId').textContent = userId ? userId : "Non connecté"; // Afficher l'ID
 
         // Fonctionnalité de déconnexion
         document.getElementById('logout').addEventListener('click', () => {
             localStorage.removeItem('loggedInUser'); // Supprimer l'utilisateur du localStorage
+            localStorage.removeItem('userId'); // Supprimer l'ID de l'utilisateur
             window.location.href = 'login.html'; // Redirection vers la page de connexion
         });
 

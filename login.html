@@ -35,21 +35,28 @@
         const loginForm = document.getElementById('loginForm');
         const loginMessage = document.getElementById('loginMessage');
 
-        loginForm.addEventListener('submit', (e) => {
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
+            // Chargement du fichier JSON des utilisateurs
+            const response = await fetch('users.json');
+            const users = await response.json();
+
+            // Vérifier si l'utilisateur existe
+            const user = users.find(u => u.email === email && u.password === password);
+
             // Vérification des identifiants
-            if (email === 'M@M' && password === 'MMM') {
-                // Sauvegarder l'email dans le localStorage pour l'afficher sur la page de connexion
-                localStorage.setItem('loggedInUser', email);
-                window.location.href = 'monprofile.html'; // Redirection vers la page de profil
-            } else {
+            if (user) {
+                // Sauvegarder l'ID et l'email dans le localStorage
+                window.location.href = `monprofile.html?id=${user.id}`; // Redirection vers la page de profil avec l'ID
+            }
+            else
                 loginMessage.textContent = "Email ou mot de passe incorrect.";
             }
-        });
+        );
     </script>
 </body>
 </html>
