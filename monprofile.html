@@ -40,11 +40,30 @@
     </footer>
 
     <script>
-        // Récupérer l'email et l'ID de l'utilisateur depuis localStorage
-        const userEmail = localStorage.getItem('loggedInUser');
-        const userId = localStorage.getItem('userId'); // Récupérer l'ID
-        document.getElementById('userEmail').textContent = userEmail ? userEmail : "Non connecté";
-        document.getElementById('userId').textContent = userId ? userId : "Non connecté"; // Afficher l'ID
+    // Fonction pour récupérer les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id'); // Récupérer l'ID de l'URL
+
+    // Charger le fichier JSON des utilisateurs
+    async function loadUserData() {
+        const response = await fetch('users.json');
+        const users = await response.json();
+
+        // Trouver l'utilisateur correspondant à l'ID
+        const user = users.find(u => u.id == userId);
+
+        // Vérifier si l'utilisateur existe et afficher ses informations
+        if (user) {
+            document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('userId').textContent = user.id;
+        } else {
+            document.getElementById('userEmail').textContent = "Utilisateur non trouvé.";
+            document.getElementById('userId').textContent = "Inconnu";
+        }
+    }
+
+    // Charger les données de l'utilisateur au chargement de la page
+    window.onload = loadUserData;
 
         // Fonctionnalité de déconnexion
         document.getElementById('logout').addEventListener('click', () => {
