@@ -49,14 +49,17 @@
             const user = users.find(u => u.email === email && u.password === password);
 
             // Vérification des identifiants
+            // Vérification des identifiants
             if (user) {
                 // Sauvegarder l'ID et l'email dans le localStorage
-                window.location.href = `monprofile.html?id=${user.id}`; // Redirection vers la page de profil avec l'ID
-            }
-            else
+                localStorage.setItem('loggedInUser', user.email); // Stocker l'email
+                localStorage.setItem('userId', user.id); // Stocker l'ID
+                window.location.href = `monprofile.html?id=${user.id}`; // Redirection vers la page de profil
+            } else {
                 loginMessage.textContent = "Email ou mot de passe incorrect.";
             }
-        );
+
+        })
     </script>
 </body>
 </html>

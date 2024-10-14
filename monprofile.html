@@ -40,38 +40,44 @@
     </footer>
 
     <script>
-        // Récupérer l'email et l'ID de l'utilisateur depuis localStorage
-        const userEmail = localStorage.getItem('loggedInUser');
-        const userId = localStorage.getItem('userId'); // Récupérer l'ID
-        document.getElementById('userEmail').textContent = userEmail ? userEmail : "Non connecté";
-        document.getElementById('userId').textContent = userId ? userId : "Non connecté"; // Afficher l'ID
-
+        // Récupérer l'ID de l'utilisateur depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userIdFromUrl = urlParams.get('id'); // Récupérer l'ID de l'URL
+    
+        // Chargement du fichier JSON des utilisateurs
+        async function loadUserData() {
+            const response = await fetch('users.json');
+            const users = await response.json();
+    
+            // Vérifier si l'ID est fourni dans l'URL
+            if (userIdFromUrl) {
+                const user = users.find(u => u.id == userIdFromUrl);
+                if (user) {
+                    document.getElementById('userEmail').textContent = user.email;
+                    document.getElementById('userId').textContent = user.id;
+                    // Optionnel : Vous pouvez également stocker ces données dans localStorage
+                    localStorage.setItem('loggedInUser', user.email);
+                    localStorage.setItem('userId', user.id);
+                } else {
+                    alert('Utilisateur non trouvé.');
+                    window.location.href = 'login.html'; // Redirige vers la page de connexion
+                }
+            } else {
+                // Si aucun ID n'est fourni, vérifiez le localStorage
+                const userEmail = localStorage.getItem('loggedInUser');
+                const userId = localStorage.getItem('userId');
+                document.getElementById('userEmail').textContent = userEmail ? userEmail : "Non connecté";
+                document.getElementById('userId').textContent = userId ? userId : "Non connecté"; 
+            }
+        }
+    
+        loadUserData();
+    
         // Fonctionnalité de déconnexion
         document.getElementById('logout').addEventListener('click', () => {
-            localStorage.removeItem('loggedInUser'); // Supprimer l'utilisateur du localStorage
-            localStorage.removeItem('userId'); // Supprimer l'ID de l'utilisateur
-            window.location.href = 'login.html'; // Redirection vers la page de connexion
-        });
-
-        // Ajouter des événements pour les fonctionnalités supplémentaires
-        document.getElementById('editProfile').addEventListener('click', () => {
-            // Logique pour modifier le profil
-            alert("Fonctionnalité à venir : Modifier mon profil");
-        });
-
-        document.getElementById('changePassword').addEventListener('click', () => {
-            // Logique pour changer le mot de passe
-            alert("Fonctionnalité à venir : Changer le mot de passe");
-        });
-
-        document.getElementById('viewOrders').addEventListener('click', () => {
-            // Logique pour voir les commandes
-            alert("Fonctionnalité à venir : Voir mes commandes");
-        });
-
-        document.getElementById('deleteAccount').addEventListener('click', () => {
-            // Logique pour supprimer le compte
-            alert("Fonctionnalité à venir : Supprimer mon compte");
+            localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('userId');
+            window.location.href = 'login.html';
         });
     </script>
 </body>
