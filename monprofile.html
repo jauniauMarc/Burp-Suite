@@ -24,7 +24,7 @@
     <section>
         <h2>Informations du profil</h2>
         <p>Email : <span id="userEmail"></span></p>
-        <p>ID Utilisateur : <span id="userId"></span></p> <!-- Affichage de l'ID de l'utilisateur -->
+        <p>ID Utilisateur : <span id="userId"></span></p>
 
         <h3>Fonctionnalités</h3>
         <ul>
@@ -40,39 +40,33 @@
     </footer>
 
     <script>
-        // Récupérer l'ID de l'utilisateur depuis l'URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const userIdFromUrl = urlParams.get('id'); // Récupérer l'ID de l'URL
-    
         // Chargement du fichier JSON des utilisateurs
         async function loadUserData() {
             const response = await fetch('users.json');
             const users = await response.json();
-    
-            // Vérifier si l'ID est fourni dans l'URL
-            if (userIdFromUrl) {
-                const user = users.find(u => u.id == userIdFromUrl);
+
+            // Vérifier si l'utilisateur est connecté
+            const loggedInEmail = localStorage.getItem('loggedInUser');
+            const loggedInId = localStorage.getItem('userId');
+
+            if (loggedInEmail && loggedInId) {
+                // Trouver l'utilisateur par email ou ID
+                const user = users.find(u => u.email === loggedInEmail && u.id == loggedInId);
                 if (user) {
                     document.getElementById('userEmail').textContent = user.email;
                     document.getElementById('userId').textContent = user.id;
-                    // Optionnel : Vous pouvez également stocker ces données dans localStorage
-                    localStorage.setItem('loggedInUser', user.email);
-                    localStorage.setItem('userId', user.id);
                 } else {
                     alert('Utilisateur non trouvé.');
                     window.location.href = 'login.html'; // Redirige vers la page de connexion
                 }
             } else {
-                // Si aucun ID n'est fourni, vérifiez le localStorage
-                const userEmail = localStorage.getItem('loggedInUser');
-                const userId = localStorage.getItem('userId');
-                document.getElementById('userEmail').textContent = userEmail ? userEmail : "Non connecté";
-                document.getElementById('userId').textContent = userId ? userId : "Non connecté"; 
+                alert('Vous devez vous connecter pour accéder à cette page.');
+                window.location.href = 'login.html'; // Redirige vers la page de connexion
             }
         }
-    
+
         loadUserData();
-    
+
         // Fonctionnalité de déconnexion
         document.getElementById('logout').addEventListener('click', () => {
             localStorage.removeItem('loggedInUser');
