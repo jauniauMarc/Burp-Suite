@@ -28,7 +28,6 @@ if (!isset($_SESSION['isLoggedIn']) || $_SESSION['isLoggedIn'] !== true) {
     </section>
 
     <nav>
-        <a href="indexe.html">Retour à l'accueil</a>
         <a href="logout.php">Se déconnecter</a>
     </nav>
 </body>
