@@ -40,31 +40,37 @@
     </footer>
 
     <script>
-        // Chargement du fichier JSON des utilisateurs
-        async function loadUserData() {
-            const response = await fetch('users.json');
-            const users = await response.json();
+// fonction asynchrone charge donnees utilisateur
+async function loadUserData() {
+    // faire une requête pour récupérer le fichier users.json
+    const response = await fetch('users.json');
+    const users = await response.json();
 
-            // Vérifier si l'utilisateur est connecté
-            const loggedInEmail = localStorage.getItem('loggedInUser');
-            const loggedInId = localStorage.getItem('userId');
+    // verifie si l'utilisateur est connecté dans le localStorage
+    const loggedInEmail = localStorage.getItem('loggedInUser');
+    const loggedInId = localStorage.getItem('userId');
 
-            if (loggedInEmail && loggedInId) {
-                // Trouver l'utilisateur par email ou ID
-                const user = users.find(u => u.email === loggedInEmail && u.id == loggedInId);
-                if (user) {
-                    document.getElementById('userEmail').textContent = user.email;
-                    document.getElementById('userId').textContent = user.id;
-                } else {
-                    alert('Utilisateur non trouvé.');
-                    window.location.href = 'login.html'; // Redirige vers la page de connexion
-                }
-            } else {
-                alert('Vous devez vous connecter pour accéder à cette page.');
-                window.location.href = 'login.html'; // Redirige vers la page de connexion
-            }
+        if (loggedInEmail && loggedInId) {
+        // Trouver l'utilisateur qui a le même email et le même ID qui est rentrer
+        const user = users.find(u => u.email === loggedInEmail && u.id == loggedInId);
+        
+        // si l'utilisateur est trouvé dans le tableau
+        if (user) {
+            // Affiche l'email dans l'html
+            document.getElementById('userEmail').textContent = user.email;
+            // Affiche l'ID dans l'html
+            document.getElementById('userId').textContent = user.id;
+        } else {
+            alert('Utilisateur non trouvé.');
+            window.location.href = 'login.html'; 
         }
-
+        } else {
+        // Si l'email ou l'ID n'existe pas dans le localStorage afficher un message d'alerte
+        alert('Vous devez vous connecter pour accéder à cette page.');
+        // Rediriger l'utilisateur vers la page de connexion
+        window.location.href = 'login.html'; 
+    }
+}
         loadUserData();
 
         // Fonctionnalité de déconnexion
